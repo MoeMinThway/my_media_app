@@ -89,7 +89,7 @@
         <table class="table table-hover text-nowrap text-center">
           <thead>
             <tr>
-              <th>Category ID</th>
+              <th> ID</th>
               <th>Title </th>
               <th>Description </th>
               <th>Created at</th>
