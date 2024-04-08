@@ -20,16 +20,27 @@ class ProfileController extends Controller
         return view('admin.profile.index',compact('user'));
     }
     public function update(Request $request){
-        // dd($request->toArray());
-
-        $updateData = $this->getUserInfo($request);
-         $validator = $this->validationCheck($request);
 
 
+        $oldData = User::where('id',$request->adminId)->first();
+
+        if(
+            $request->adminName != $oldData->name ||
+            $request->adminEmail != $oldData->email ||
+            $request->adminPhone != $oldData->phone ||
+            $request->adminAddress != $oldData->address ||
+            $request->adminGender != $oldData->gender
+            ){
+                $updateData = $this->getUserInfo($request);
+                $validator = $this->validationCheck($request);
+               User::where('id',$request->adminId)->update($updateData);
+               return redirect('dashboard')->with(['message'=>"Account Update Success"]);
+            }else{
+                return back();
+            }
 
 
-        User::where('id',$request->adminId)->update($updateData);
-        return redirect('dashboard')->with(['message'=>"Account Update Success"]);
+
 
     }
     public function changePassword(){
@@ -54,7 +65,7 @@ class ProfileController extends Controller
             // dd("correct");
             $updatePW =[
                 "password"=>$hashNewPW,
-                "updated_at"=>Carbon ::new()
+                "updated_at"=>Carbon::now(),
             ];
             User::where('id',Auth::user()->id)->update($updatePW);
             // dd("success");

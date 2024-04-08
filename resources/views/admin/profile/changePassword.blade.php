@@ -34,7 +34,7 @@
 
               <form class="form-horizontal" action="{{route('admin#changePasswordPost')}}" method="POST">
                 @csrf
-                <input type="hidden" name="adminId" value="{{$user->id}}">
+                {{-- <input type="hidden" name="adminId" value="{{$user->id}}"> --}}
 
                 <div class="form-group row">
                         <label for="inputName" class="col-sm-3 col-form-label">Old Password</label>

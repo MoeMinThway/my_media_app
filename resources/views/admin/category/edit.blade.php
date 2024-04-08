@@ -19,27 +19,28 @@
                     </button>
                   </div>
                 @endif
-                <form action="{{route('admin#category#create')}}" method="POST">
+                <form action="{{route('admin#category#update')}}" method="POST">
                     @csrf
+                    <input type="hidden" name="categoryId" value="{{$category->category_id}}">
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Category Name</label>
-                      <input type="text" name="categoryName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter category name">
-                    @error('categoryName')
+                      <label for="exampleInputEmail1">Category Name Edit</label>
+                      <input type="text"  value="{{old('categoryTitle',$category->title)   }}"  name="categoryTitle" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter category name">
+                    @error('categoryTitle')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Description</label>
-                      <textarea name="categoryDescription" id="" cols="30" rows="5" class="form-control" placeholder="Enter description"></textarea>
+                      <label for="exampleInputPassword1">Description Edit</label>
+                      <textarea name="categoryDescription"   id="" cols="30" rows="5" class="form-control" placeholder="Enter description">{{old('categoryDescription',$category->description)   }}</textarea>
                       @error('categoryDescription')
                       <span class="text-danger">{{$message}}</span>
                   @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Create</button>
-                    <a href="#">
-                        <button class="btn btn-dark" disabled>Update</button>
-                    </a>
+                <a href="#">
+                    <button class=" btn btn-primary" disabled>Create</button>
+                </a>
+                    <button type="submit" class="btn btn-dark">Update</button>
                 </form>
             </div>
         </div>

@@ -35,6 +35,13 @@ Route::middleware([
 
 
         Route::get('category',[CategoryController::class,'category'])->name('admin#category');
+        Route::get('category/delete/{id}',[CategoryController::class,'delete'])->name('admin#category#delete');
+        Route::get('category/editPage/{id}',[CategoryController::class,'editPage'])->name('admin#category#editPage');
+        Route::post('category/editPage/',[CategoryController::class,'update'])->name('admin#category#update');
+        Route::post('category/create',[CategoryController::class,'create'])->name('admin#category#create');
+        Route::get('category/search',[CategoryController::class,'search'])->name('admin#category#search');
+
+
         Route::get('post',[PostController::class,'post'])->name('admin#post');
         Route::get('tpost',[TrendPostController::class,'tpost'])->name('admin#trendPost');
 
