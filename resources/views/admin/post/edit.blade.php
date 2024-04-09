@@ -19,18 +19,19 @@
                     </button>
                   </div>
                 @endif
-                <form action="{{route('admin#post#create')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('admin#post#update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" value="{{$post->post_id}}" name="postId" >
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Post Title</label>
-                      <input type="text" value="{{old('postTitle')}}" name="postTitle" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter post title">
+                      <label for="exampleInputEmail1">Post Title Edit</label>
+                      <input type="text" value="{{old('postTitle',$post->title)}}" name="postTitle" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter post title">
                           @error('postTitle')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Post Description</label>
-                      <textarea name="postDescription" id="" cols="30" rows="5" class="form-control" placeholder="Enter post description">{{old('postDescription')}} </textarea>
+                      <label for="exampleInputPassword1">Post Description Edit</label>
+                      <textarea name="postDescription" id="" cols="30" rows="5" class="form-control" placeholder="Enter post description">{{old('postDescription',$post->description)}} </textarea>
                       @error('postDescription')
                       <span class="text-danger">{{$message}}</span>
                   @enderror
@@ -38,20 +39,37 @@
 
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Post Image</label>
-                        <input type="file"  value="{{old('postImage')}}" name="postImage" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter post title">
+                        <label for="exampleInputEmail1">Post Image Edit</label>
+             <div class="">
+                @if ($post->image == null)
+                <img class="rounded shadow-sm"  src="{{asset('defaultImage/default.jpg')}}" alt="" width="240px">
+
+
+                @else
+                <img class="rounded shadow-sm"  src="{{asset('/postImage/'.$post->image)}}" alt="" width="240px">
+
+                @endif
+             </div>
+
+                        <input type="file"  value="{{old('postImage',$post->image)}}" name="postImage" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter post title">
                             @error('postImage')
                               <span class="text-danger">{{$message}}</span>
                           @enderror
                       </div>
 
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Category Name</label>
+                        <label for="exampleInputEmail1">Category Name Edit</label>
                         <select name="postCategory" id="" class="form-control" >
                             <option value="">Choose category</option>
+
                             @foreach ($categories as $c)
+
+                            @if ($post->category_id == $c->category_id)
+                               <option selected value="{{$c->category_id}}">{{$c->title}} </option>
+                            @endif
                             <option  value="{{$c->category_id}}">{{$c->title}} </option>
                             @endforeach
+
 
                         </select>
 
@@ -61,10 +79,14 @@
                           @enderror
                       </div>
 
-                    <button type="submit" class="btn btn-primary">Create</button>
+
                     <a href="#">
-                        <button class="btn btn-dark" disabled>Update</button>
+                        <button class="btn btn-primary" disabled>Create</button>
                     </a>
+                    <button type="submit" class="btn btn-dark">Update</button>
+
+
+
                 </form>
             </div>
         </div>
@@ -148,7 +170,6 @@
                 <td>
                     {{-- {{$p->category_id}} --}}
                     @foreach ($categories as $c)
-
                         @if ($p->category_id == $c->category_id)
                             {{$c->title}}
                         @endif
