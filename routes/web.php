@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ListController;
@@ -50,6 +50,7 @@ Route::middleware([
 
 
         Route::get('tpost',[TrendPostController::class,'tpost'])->name('admin#trendPost');
+        Route::get('tpost/details/{id}',[TrendPostController::class,'details'])->name('admin#trendPost#details');
 
     });
 });
